@@ -7,7 +7,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-export async function GET(req: any, res: any) {
+export async function GET(req) {
   try {
     const user = await currentUser();
     if (!user?.primaryEmailAddress?.emailAddress) {
@@ -27,10 +27,10 @@ export async function GET(req: any, res: any) {
     }
 
     // @ts-ignore
-    const transactionList: TRANSACTION[] = await db
+    const transactionList = await db
       .select()
       .from(UserSubscription)
-      .where(eq(UserSubscription.email, email as string))
+      .where(eq(UserSubscription.email, email))
       .orderBy(desc(UserSubscription.id));
 
     // Cache the result to reduce database load for frequent requests

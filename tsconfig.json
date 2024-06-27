@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/create-subscription/route.js", "app/api/get-history/route.ts", "utils/redis.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/create-subscription/route.js", "app/api/get-history/route.ts", "utils/redis.tsx", "app/api/get-transactions/route.js"],
   "exclude": ["node_modules"]
 }
