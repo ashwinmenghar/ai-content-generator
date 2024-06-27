@@ -37,12 +37,12 @@ function SideNav() {
   ];
 
   if (email?.split("@")[0] == "system") {
+    MenuList.push({
+      name: "Transactions",
+      icon: WalletCards,
+      path: "/dashboard/transactions",
+    });
   }
-  MenuList.push({
-    name: "Transactions",
-    icon: WalletCards,
-    path: "/dashboard/transactions",
-  });
 
   return (
     <div className="h-screen relative p-5 shadow-sm border bg-white">
