@@ -7,14 +7,7 @@ import { desc, eq } from "drizzle-orm";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-type ResponseData = {
-  message: string;
-};
-
-export async function GET(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
+export async function GET() {
   try {
     const user = await currentUser();
     const email = user?.primaryEmailAddress?.emailAddress;
