@@ -1,9 +1,10 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { AIOutput } from "@/utils/schema";
-import { desc, eq } from "drizzle-orm";
+import { AIOutput, UserSubscription } from "@/utils/schema";
+import { desc, eq, gte, lte } from "drizzle-orm";
 import { db } from "@/utils/db";
 import { NextResponse } from "next/server";
 import { client } from "@/utils/redis";
+import moment from "moment";
 
 export interface HISTORY {
   id: number; // Use lowercase for primitives
@@ -21,8 +22,10 @@ export async function GET(req: any, res: any) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    const email = user.primaryEmailAddress.emailAddress;
+
     // Attempt to retrieve cached history
-    const cacheKey = `history:${user.primaryEmailAddress.emailAddress}`;
+    const cacheKey = `history:${email}`;
     const cachedHistory = await client.get(cacheKey);
 
     if (cachedHistory) {
@@ -30,7 +33,7 @@ export async function GET(req: any, res: any) {
     }
 
     // @ts-ignore
-    const historyList: HISTORY[] = await db
+    let historyList: HISTORY[] = await db
       .select()
       .from(AIOutput)
       .where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress))

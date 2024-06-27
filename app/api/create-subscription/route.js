@@ -1,4 +1,5 @@
 import { db } from "@/utils/db";
+import { client } from "@/utils/redis";
 import { UserSubscription } from "@/utils/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { eq, like } from "drizzle-orm";
