@@ -1,23 +1,27 @@
+"use server";
 import { TRANSACTION } from "@/app/dashboard/transactions/page";
 import { db } from "@/utils/db";
 import { client } from "@/utils/redis";
 import { UserSubscription } from "@/utils/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: any, res: any) {
   try {
     const user = await currentUser();
-    const email = user?.primaryEmailAddress?.emailAddress;
+    if (!user?.primaryEmailAddress?.emailAddress) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
+    const email = user?.primaryEmailAddress?.emailAddress;
     // Attempt to retrieve cached history
     const cacheKey = `transactions:${email}`;
     const cachedTransactions = await client.get(cacheKey);
 
     if (cachedTransactions) {
       return NextResponse.json({
+        success: true,
         transactionList: JSON.parse(cachedTransactions),
       });
     }
@@ -30,11 +34,14 @@ export async function GET() {
       .orderBy(desc(UserSubscription.id));
 
     // Cache the result to reduce database load for frequent requests
-    await client.set(cacheKey, JSON.stringify(transactionList)); // Expires in 1 hour
+    await client.set(cacheKey, JSON.stringify(transactionList));
 
-    return NextResponse.json({ transactionList });
+    return NextResponse.json({ success: true, transactionList });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error });
+    return NextResponse.json({
+      success: false,
+      message: "something went wrong",
+    });
   }
 }

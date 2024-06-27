@@ -1,7 +1,7 @@
 "use client";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function Header() {
   const { user } = useUser();

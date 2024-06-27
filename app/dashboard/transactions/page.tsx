@@ -19,16 +19,8 @@ function Transactions() {
 
   const fetchTransaction = async () => {
     await axios
-      .get("/api/transactions", {
-        params: {
-          email: user?.primaryEmailAddress?.emailAddress as string,
-        },
-      })
-      .then((resp) => {
-        console.log(resp.data.transactionList);
-
-        setTransactions(resp.data?.transactionList);
-      })
+      .get("/api/get-transactions", {})
+      .then((resp) => setTransactions(resp.data?.transactionList))
       .catch((error) => console.log(error));
   };
 
