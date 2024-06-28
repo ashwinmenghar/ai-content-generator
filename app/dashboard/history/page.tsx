@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TEMPLATE } from "../_components/TemplateListSection";
 import Template from "@/app/(data)/Template";
 import CopyButton from "./_components/CopyButton";
 import axios from "axios";
+import { UserSubscriptionContext } from "@/app/(context)/UserSubscriptionContext";
+import { Loader2Icon } from "lucide-react";
 
 export interface HISTORY {
   id: Number;
@@ -17,14 +19,22 @@ export interface HISTORY {
 function History() {
   // const user = await currentUser();
   const [history, setHistory] = useState<HISTORY[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { userSubscription } = useContext(UserSubscriptionContext);
 
   const fetchData = async () => {
     await axios
-      .get("/api/get-history", {})
+      .get("/api/get-history", {
+        params: {
+          userSubscription: userSubscription,
+        },
+      })
       .then((resp) => setHistory(resp.data))
-      .catch((err) => console.log(err.message));
+      .catch((err) => console.log(err.message))
+      .finally(() => setLoading(false));
   };
   useEffect(() => {
+    setLoading(true);
     fetchData();
   }, [!history]);
 
@@ -43,6 +53,7 @@ function History() {
     );
     return template;
   };
+
   return (
     <div className="m-5 p-5 border rounded-lg bg-white">
       <h2 className="font-bold text-3xl">History</h2>
@@ -56,6 +67,16 @@ function History() {
         <h2>WORDS</h2>
         <h2>COPY</h2>
       </div>
+      {loading && (
+        <div>
+          <Loader2Icon className="animate-spin w-full absolute h-24 left-[0%] bottom-[50%] text-gray-300" />
+        </div>
+      )}
+      {history.length == 0 && (
+        <span className="flex justify-center items-center mt-5 font-semibold">
+          Not Data Found
+        </span>
+      )}
       {history.map((item: HISTORY, index: number) => (
         <div key={index}>
           <div className="grid grid-cols-7 my-5 py-3 px-3">

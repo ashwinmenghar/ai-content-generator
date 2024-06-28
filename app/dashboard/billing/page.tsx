@@ -187,6 +187,24 @@ function billing() {
                   Unlimted Download & Copy{" "}
                 </span>
               </li>
+              <li className="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-5 text-indigo-700"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
+                </svg>
+
+                <span className="text-gray-700"> 1 Month of History </span>
+              </li>
             </ul>
 
             {/* <a
@@ -281,12 +299,34 @@ function billing() {
                   Unlimated Download & Copy{" "}
                 </span>
               </li>
+              <li className="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="size-5 text-indigo-700"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
+                </svg>
+
+                <span className="text-gray-700"> 1 Year of History </span>
+              </li>
             </ul>
 
             <Button
               disabled={loading}
               onClick={() => CreateSubscription()}
-              className="w-full rounded-full mt-5 p-6"
+              className={`w-full rounded-full mt-5 p-6 ${
+                userSubscription == true
+                  ? "bg-green-400 hover:bg-green-500"
+                  : null
+              }`}
               variant="outline"
             >
               {loading && <Loader2Icon className="animate-spin" />}

@@ -17,6 +17,10 @@ export interface HISTORY {
 
 export async function GET(req: any, res: any) {
   try {
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.searchParams);
+    const userSubscription = searchParams.get("userSubscription");
+
     const user = await currentUser();
     if (!user?.primaryEmailAddress?.emailAddress) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -32,12 +36,27 @@ export async function GET(req: any, res: any) {
       return NextResponse.json(JSON.parse(cachedHistory));
     }
 
-    // @ts-ignore
-    let historyList: HISTORY[] = await db
-      .select()
-      .from(AIOutput)
-      .where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress))
-      .orderBy(desc(AIOutput.id));
+    let historyList: HISTORY[];
+
+    if (userSubscription) {
+      // @ts-ignore
+      historyList = await db.query.AIOutput.findMany({
+        where: (AIOutput, { eq, gte }) => {
+          eq(AIOutput.createdBy, email);
+          gte(
+            AIOutput.createdAt,
+            moment().subtract(30, "days").format("DD/MM/YYYY")
+          );
+        },
+      });
+    } else {
+      // @ts-ignore
+      historyList = await db
+        .select()
+        .from(AIOutput)
+        .where(eq(AIOutput.createdBy, email))
+        .orderBy(desc(AIOutput.id));
+    }
 
     // Cache the result to reduce database load for frequent requests
     await client.set(cacheKey, JSON.stringify(historyList), "EX", 24 * 60 * 60); // Expires in 1 hour

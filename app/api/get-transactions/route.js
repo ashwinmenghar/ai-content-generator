@@ -30,7 +30,6 @@ export async function GET(req) {
     const transactionList = await db
       .select()
       .from(UserSubscription)
-      .where(eq(UserSubscription.email, email))
       .orderBy(desc(UserSubscription.id));
 
     // Cache the result to reduce database load for frequent requests
