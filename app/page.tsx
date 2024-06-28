@@ -60,7 +60,7 @@ export default function Home() {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 >
                   <path d="m9 18 6-6-6-6" />
@@ -103,7 +103,7 @@ export default function Home() {
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <path d="m9 18 6-6-6-6" />
@@ -129,7 +129,7 @@ export default function Home() {
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <rect width="10" height="14" x="3" y="8" rx="2" />
@@ -155,7 +155,7 @@ export default function Home() {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 >
                   <path d="m9 18 6-6-6-6" />
@@ -178,7 +178,7 @@ export default function Home() {
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <path d="M20 7h-9" />
@@ -205,7 +205,7 @@ export default function Home() {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 >
                   <path d="m9 18 6-6-6-6" />
@@ -228,7 +228,7 @@ export default function Home() {
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
-                stroke-linecap="round"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
@@ -253,7 +253,7 @@ export default function Home() {
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                   strokeLinejoin="round"
                 >
                   <path d="m9 18 6-6-6-6" />

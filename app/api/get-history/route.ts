@@ -42,10 +42,12 @@ export async function GET(req: any, res: any) {
       // @ts-ignore
       historyList = await db.query.AIOutput.findMany({
         where: (AIOutput, { eq, gte }) => {
-          eq(AIOutput.createdBy, email);
-          gte(
-            AIOutput.createdAt,
-            moment().subtract(30, "days").format("DD/MM/YYYY")
+          return (
+            eq(AIOutput.createdBy, email) &&
+            gte(
+              AIOutput.createdAt,
+              moment().subtract(30, "days").format("DD/MM/YYYY").toString() // Use ISO format
+            )
           );
         },
       });
